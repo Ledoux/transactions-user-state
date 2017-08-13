@@ -1,11 +1,11 @@
 import * as user from './reducers/user'
 import * as userSaga from './sagas/user'
-import * as condition from './utils/condition'
+import * as conditions from './utils/conditions'
 import * as redirection from './utils/redirection'
 
 const transactionsUserState = Object.assign({ userSaga
 },
-  condition,
+  conditions,
   redirection,
   user
 )

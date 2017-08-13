@@ -1,7 +1,7 @@
 import { isActiveUserIn,
   isAdminUserIn,
   isUserIn
-} from './modes'
+} from './conditions'
 
 const getNotUserInRedirectPathname = ({location, match}) => {
   if (!isUserIn()) {

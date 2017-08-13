@@ -2,18 +2,18 @@ import values from 'lodash.values'
 import pluralize from 'pluralize'
 import { call, put, select } from 'redux-saga/effects'
 import { takeEvery } from 'redux-saga'
-import { mergeReselector } from 'transactions-redux-reselector'
-import { isSuccessTransactionsAction } from 'transactions-redux-request'
-
-import { setAuthorizationIdsByModeName,
+const { getAuthorizedLinks,
+  setAuthorizationIdsByModeName,
   setAuthorizationLinks,
   setAuthorizationSelectedMode,
   getNewAuthorizedModes
-} from '../reducers/authorization'
+} = require('transactions-authorization-state').default
+const { IS_UNDER_CONSTRUCTION,
+  getLocationSearch } = require('transactions-interface-state').default
+import { mergeReselector } from 'transactions-redux-reselector'
+import { isSuccessTransactionsAction } from 'transactions-redux-request'
+
 import { SET_USER } from '../reducers/user'
-import { IS_UNDER_CONSTRUCTION } from '../utils/config'
-import { getAuthorizedLinks } from '../utils/linking'
-import { getLocationSearch } from '../utils/location'
 
 // DATA
 function * fromWatchSetUserData (action) {
