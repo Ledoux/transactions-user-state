@@ -34,7 +34,7 @@
   },
   "license": "MIT",
   "main": "lib/index.js",
-  "name": "transactions-auth-state",
+  "name": "transactions-user-state",
   "scripts": {
     "compile": "babel --presets latest -d lib/ src/",
     "test": "ava -v",
