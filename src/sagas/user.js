@@ -2,14 +2,14 @@ import values from 'lodash.values'
 import pluralize from 'pluralize'
 import { call, put, select } from 'redux-saga/effects'
 import { takeEvery } from 'redux-saga'
-const { getAuthorizedLinks,
+import { getAuthorizedLinks,
   setAuthorizationIdsByModeName,
   setAuthorizationLinks,
   setAuthorizationSelectedMode,
-  getNewAuthorizedModes
-} = require('transactions-authorization-state').default
-const { IS_UNDER_CONSTRUCTION,
-  getLocationSearch } = require('transactions-interface-state').default
+  getAuthorizedModes
+} from 'transactions-authorization-state'
+import { IS_UNDER_CONSTRUCTION,
+  getLocationSearch } from 'transactions-interface-state'
 import { mergeReselector } from 'transactions-redux-reselector'
 import { isSuccessTransactionsAction } from 'transactions-redux-request'
 
@@ -17,9 +17,8 @@ import { SET_USER } from '../reducers/user'
 
 // DATA
 function * fromWatchSetUserData (action) {
-  const { joinedCollectionNames,
-    user: {
-      active,
+  const { config: { joinedModeCollectionNames },
+    user: { active,
       id
     }
   } = action
@@ -39,9 +38,7 @@ function * fromWatchSetUserData (action) {
         collectionName: 'users',
         horizontals: [
           {
-            collectionNames: [
-              'editors'
-            ],
+            collectionNames: joinedModeCollectionNames,
             fromKey: 'id',
             toKey: 'userId'
           }
@@ -97,20 +94,20 @@ function * fromWatchMergeNormalizerGetSignActionData (action) {
     console.warn(`there should be a patch here to determine if we have
       merged the logged user`, action)
   }
-  const modes = yield select(getNewAuthorizedModes)
-  const links = getAuthorizedLinks(modes)
-  yield put(setAuthorizationLinks(links, modes))
+  const authorizedModes = yield select(getAuthorizedModes)
+  const authorizedLinks = getAuthorizedLinks(authorizedModes)
+  yield put(setAuthorizationLinks(authorizedLinks, authorizedModes))
 }
 
 // WATCHES
-export function * watchSetUser () {
-  if (!IS_UNDER_CONSTRUCTION) {
-    yield * takeEvery(SET_USER, fromWatchSetUserData)
-  }
-}
-
 export function * watchMergeNormalizerGetSignAction () {
   yield * takeEvery(action => action.type === 'MERGE_NORMALIZER_GET_SIGN',
     fromWatchMergeNormalizerGetSignActionData
   )
+}
+
+export function * watchSetUser () {
+  if (!IS_UNDER_CONSTRUCTION) {
+    yield * takeEvery(SET_USER, fromWatchSetUserData)
+  }
 }
