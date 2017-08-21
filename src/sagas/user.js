@@ -17,12 +17,15 @@ import { SET_USER } from '../reducers/user'
 
 // DATA
 function * fromWatchSetUserData (action) {
-  const { config: { joinedModeCollectionNames },
+  const { config: { getFilteredElements,
+      joinedModeCollectionNames,
+      requestTransactions
+    },
     user: { active,
       id
     }
   } = action
-  if (!action.config || !action.config.requestTransactions) {
+  if (!requestTransactions) {
     console.warn('transactions-interface-state fromWatchSetUserData, you need to pass a requestTransactions in your action')
     return
   }
@@ -33,7 +36,7 @@ function * fromWatchSetUserData (action) {
     }
     // now we need to get all the joined collections
     // that say more about the user... Is she/he a reviewer, an editor...?
-    yield put(action.config.requestTransactions('GET',
+    yield put(requestTransactions('GET',
       [{
         collectionName: 'users',
         horizontals: [
@@ -46,6 +49,7 @@ function * fromWatchSetUserData (action) {
         query: { id }
       }],
       {
+        extra: { getFilteredElements },
         tag: 'sign'
       }
     ))
@@ -94,7 +98,7 @@ function * fromWatchMergeNormalizerGetSignActionData (action) {
     console.warn(`there should be a patch here to determine if we have
       merged the logged user`, action)
   }
-  const authorizedModes = yield select(getAuthorizedModes)
+  const authorizedModes = yield select(getAuthorizedModes, action.extra.getFilteredElements)
   const authorizedLinks = getAuthorizedLinks(authorizedModes)
   yield put(setAuthorizationLinks(authorizedLinks, authorizedModes))
 }
