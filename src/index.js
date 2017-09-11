@@ -1,5 +1,6 @@
+export * from './hocs/components'
+export * from './hocs/pages'
 export * from './reducers/user'
 export * from './reducers/tour'
-export * from './sagas/user'
 export * from './utils/conditions'
 export * from './utils/redirection'
