@@ -53,7 +53,11 @@ export const SignForm = WrappedComponent => {
       }
     }
     render () {
-      return <WrappedComponent {...this.props} state={this.state} />
+      return <WrappedComponent {...this.props}
+        handleChangeValue={this.handleChangeValue}
+        handleClickCheckValue={this.handleClickCheckValue}
+        state={this.state}
+      />
     }
   }
   return connect(null, { closeModal,
