@@ -28,12 +28,13 @@ export const TourButton = WrappedComponent => {
     }
     _onTourClick () {
       const { email,
-        path
+        path,
+        returnTo
       } = this.props
       apiFetch(path, {
         method: 'POST',
-        body: JSON.stringify({
-          email
+        body: JSON.stringify({ email,
+          returnTo
         })
       }).then(result => console.log(result))
     }
@@ -48,7 +49,7 @@ export const TourButton = WrappedComponent => {
         onTourClick={this.onTourClick} />
     }
   }
-  _TourButton.defaultProps = {
+  _TourButton.defaultProps = { returnTo: '/dashboard',
     text: 'Take a tour'
   }
   function mapStateToProps({ user: { email } }) {

@@ -9,9 +9,9 @@ import { getReturnState } from '../../utils/return'
 
 export const SignForm = WrappedComponent => {
   class _SignForm extends Component {
-    constructor () {
-      super()
-      const { returnMessage, returnTo } = getReturnState()
+    constructor (props) {
+      super(props)
+      const { returnMessage, returnTo } = getReturnState(props)
       // it is important to initialize email and password with empty
       // string to make already the input components as controlled component
       // otherwise you will get this typical 'switched from uncontrolled' to 'controlled'
@@ -21,11 +21,6 @@ export const SignForm = WrappedComponent => {
         firstName: '',
         lastName: '',
         password: '',
-        subscription: {
-          selector: false,
-          reviewer: false,
-          editor: false
-        },
         returnMessage,
         returnTo
       }
@@ -56,8 +51,7 @@ export const SignForm = WrappedComponent => {
       return <WrappedComponent {...this.props}
         handleChangeValue={this.handleChangeValue}
         handleClickCheckValue={this.handleClickCheckValue}
-        state={this.state}
-      />
+        {...this.state} />
     }
   }
   return connect(null, { closeModal,

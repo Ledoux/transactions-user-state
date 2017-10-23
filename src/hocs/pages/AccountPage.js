@@ -37,12 +37,14 @@ export const AccountPage = WrappedComponent => {
     email,
     firstName,
     id,
+    imageUrl,
     lastName
   }}) => {
     return { active,
       email,
       firstName,
       id,
+      imageUrl,
       lastName
     }
   }

@@ -19,6 +19,7 @@
     "lodash.sample": "^4.2.1",
     "lodash.values": "^4.3.0",
     "pluralize": "^3.0.0",
+    "react": "^16.0.0",
     "transactions-authorization-state": "latest",
     "transactions-interface-state": "latest",
     "transactions-redux-request": "latest",
@@ -45,5 +46,5 @@
     "dev": "npm run dev",
     "dev-watch": "nodemon --watch src --exec \"npm run compile\""
   },
-  "version": "0.0.6"
+  "version": "0.0.7"
 }
