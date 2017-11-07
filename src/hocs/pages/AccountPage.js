@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { apiFetch,
   showModalWarning
 } from 'transactions-interface-state'
-import { request } from 'transactions-redux-request'
+import { request } from 'transactions-redux-react'
 
 export const AccountPage = WrappedComponent => {
   class _AccountPage extends Component {

@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
 
-export const SignupPage = WrappedComponent => {
-  function mapStateToProps ({ flash }) {
-    return { data: flash && flash.signupData,
-      message: flash && flash.signupMessage,
-    }
-  }
-  return connect(mapStateToProps)(SignupPage)
-}
+export const SignupPage = connect(({ flash, setup: { api: { signPath }} }) =>
+  ({
+    data: flash && flash.signupData,
+    message: flash && flash.signupMessage,
+    signPath
+  }))
