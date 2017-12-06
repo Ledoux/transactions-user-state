@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { apiFetch,
-  showModalWarning
-} from 'transactions-interface-state'
+
+import { showModalWarning } from 'transactions-interface-state'
 import { request } from 'transactions-redux-react'
 
 export const AccountPage = WrappedComponent => {
   class _AccountPage extends Component {
     constructor () {
-      super ()
+      super()
       this.state = { isUpload: false }
     }
     render () {
-      return <WrappedComponent {...this.props}
-        state={this.state} />
+      return <WrappedComponent {...this.props} {...this.state} />
     }
   }
-  _AccountPage.defaultProps = { api: { signPath: '/sign' },
-    fields: [
+  _AccountPage.defaultProps = { fields: [
       {
         key: 'firstName',
         name: 'First Name'
@@ -32,23 +29,20 @@ export const AccountPage = WrappedComponent => {
       }
     ]
   }
-  const mapStateToProps = ({ user: {
+  return connect(({ user: {
     active,
     email,
     firstName,
     id,
     imageUrl,
     lastName
-  }}) => {
-    return { active,
-      email,
-      firstName,
-      id,
-      imageUrl,
-      lastName
-    }
-  }
-  return connect(mapStateToProps, { request,
+  }}) => ({ active,
+    email,
+    firstName,
+    id,
+    imageUrl,
+    lastName
+  }), { request,
     showModalWarning
   })(_AccountPage)
 }
